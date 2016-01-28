@@ -11,6 +11,7 @@ class Db
 	public function __construct() {
 		try {
 			$this->dbCon = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8", DB_USER, DB_PASS);
+			$this->dbCon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch (PDOException $e) {
 			exit($e->getMessage());
 		}

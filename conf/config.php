@@ -12,5 +12,6 @@ if ($siteNo == 0) {
 	define('DB_PASS', 'ichikawa');
 	define('DB_NAME', 'user_app');
 	define('SITE_PATH', 'http://localhost/user_app/');
+	define('LOG_FOLDER_PATH', 'C:/pleiades/xampp/htdocs/user_app/log/');
 	ini_set('display_errors', 1);
 }

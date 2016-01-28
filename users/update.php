@@ -13,12 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] != "POST") {
 } else {
 	$target = [
 		'id' => $_POST['id'],
+		'password' => $_POST['password'],
 		'name' => $_POST['name'],
 		'email' => $_POST['email']
 	];
-	$user->updateUser($target);
-	header("Location: view.php?id=" . $target['id']);
-	exit();
+	$error = userValidate($target);
+	if (is_null($error)) {
+		$user->updateUser($target);
+		header("Location: view.php?id=" . $target['id']);
+		exit();
+	}
 }
 
 $title = "ユーザ編集";

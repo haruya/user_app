@@ -15,6 +15,10 @@
 		<td><?php echo $target['name']; ?></td>
 	</tr>
 	<tr>
+		<th>パスワード</th>
+		<td>【非公開】</td>
+	</tr>
+	<tr>
 		<th>メールアドレス</th>
 		<td><?php echo $target['email']; ?></td>
 	</tr>

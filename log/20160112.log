@@ -1,0 +1,6 @@
+2016/01/12 12:00:22	[エラー]	記述したエラーメッセージ
+2016/01/12 12:07:30	[エラー]	記述したエラーメッセージ
+2016/01/12 12:08:37	[エラー]	記述したエラーメッセージ
+2016/01/12 12:11:31	[エラー]	記述したエラーメッセージ
+2016/01/12 13:18:23	[エラー]	ユーザ一覧取得エラー: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'user_app.user' doesn't exist
+2016/01/12 13:27:38	[エラー]	ユーザ一覧取得エラー: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'user_app.user' doesn't exist

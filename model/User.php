@@ -1,11 +1,12 @@
 <?php
 
 require_once(dirname(__FILE__) . "/Db.php");
+require_once(dirname(__FILE__) . "/Log.php");
 
 /**
  * Userクラス
  */
-class User extends Db
+class User extends Auth
 {
 	/**
 	 * ユーザ一覧取得
@@ -15,6 +16,7 @@ class User extends Db
 			SELECT
 				id,
 				name,
+				password,
 				email,
 				created,
 				modified
@@ -23,14 +25,20 @@ class User extends Db
 			ORDER BY
 				id ASC
 		";
-		$this->executeSql($sql);
-		return $this->fetchDatabase();
+		try {
+			$this->executeSql($sql);
+			return $this->fetchDatabase();
+		} catch (PDOException $e) {
+			echo "ユーザ一覧取得の際にエラー";
+			Log::message("ユーザ一覧取得の際にエラー: " . $e->getMessage());
+			exit;
+		}
 	}
 	
 	/**
 	 * ユーザ取得
 	 */
-	public function getUser($id) {
+	public function getTargetUser($id) {
 		$sql = "
 			SELECT
 				id,
@@ -50,6 +58,7 @@ class User extends Db
 		$data = $this->fetchDatabase();
 		if ($data !== false) {
 			$user['id'] = $data[0]['id'];
+			$user['password'] = '';
 			$user['name'] = $data[0]['name'];
 			$user['email'] = $data[0]['email'];
 			return $user;
@@ -66,11 +75,13 @@ class User extends Db
 			INSERT INTO
 				users (
 					name,
+					password,
 					email,
 					created,
 					modified
 				) VALUES (
 					:name,
+					:password,
 					:email,
 					now(),
 					now()
@@ -78,6 +89,7 @@ class User extends Db
 		";
 		$params = [
 			[":name", $post['name'], PDO::PARAM_STR],
+			[":password", $post['password'], PDO::PARAM_STR],
 			[":email", $post['email'], PDO::PARAM_STR]
 		];
 		
@@ -94,6 +106,7 @@ class User extends Db
 				users
 			SET
 				name = :name,
+				password = :password,
 				email = :email,
 				modified = now()
 			WHERE
@@ -101,6 +114,7 @@ class User extends Db
 		";
 		$params = [
 			[":name", $post['name'], PDO::PARAM_STR],
+			[":password", $post['password'], PDO::PARAM_STR],
 			[":email", $post['email'], PDO::PARAM_STR],
 			[":id", $post['id'], PDO::PARAM_INT]
 		];
